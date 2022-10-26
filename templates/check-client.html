@@ -1,0 +1,159 @@
+{% load check_tags %}
+<!DOCTYPE html>
+<html lang="ua">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check</title>
+
+    <style>
+        body {
+            font-family: "Open Sans", sans-serif;
+            line-height: 1.25;
+            background: #fafafa;
+        }
+
+        .check {
+            position: relative;
+            margin: 30px;
+            width: 400px;
+            min-height: 250px;
+            background: #e2e3de;
+            padding: 4px 10px;
+            box-shadow: 0 0 50px rgba(0, 0, 0, 0.1);
+        }
+
+        .check svg {
+            position: absolute;
+            top: -3px;
+            left: 2px;
+            width: 100%;
+        }
+
+        .info {
+            text-align: center;
+        }
+
+        .info {
+            display: flex;
+            flex-direction: column;
+            font-size: 12px;
+            line-height: 20px;
+            margin: 0;
+        }
+
+        h4 {
+            text-align: center;
+        }
+
+        .res {
+            text-align: right;
+            padding: 10px 20px;
+        }
+
+        table {
+            border: 1px solid #ccc;
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            table-layout: fixed;
+        }
+
+        table tr {
+            background-color: #f8f8f8;
+            border: 1px solid #ddd;
+            padding: .35em;
+        }
+
+        table th,
+        table td {
+            padding: .625em;
+            text-align: center;
+        }
+
+        table th {
+            font-size: .70em;
+            letter-spacing: .1em;
+            text-transform: uppercase;
+        }
+
+        @media screen and (max-width: 600px) {
+            table {
+                border: 0;
+            }
+            table caption {
+                font-size: 1.3em;
+            }
+            table thead {
+                border: none;
+                clip: rect(0 0 0 0);
+                height: 1px;
+                margin: -1px;
+                overflow: hidden;
+                padding: 0;
+                position: absolute;
+                width: 1px;
+            }
+            table tr {
+                border-bottom: 3px solid #ddd;
+                display: block;
+                margin-bottom: .625em;
+            }
+            table td {
+                border-bottom: 1px solid #ddd;
+                display: block;
+                font-size: .8em;
+                text-align: right;
+            }
+            table td::before {
+                content: attr(data-label);
+                float: left;
+                font-weight: bold;
+                text-transform: uppercase;
+            }
+            table td:last-child {
+                border-bottom: 0;
+            }
+        }
+    </style>
+
+</head>
+
+<body>
+    <div class="check">
+        <svg width="210px" viewBox="0 0 210 5" xmlns="http://www.w3.org/2000/svg">
+         <path d="M0,0 210,0" fill="none" stroke="#e2e3de" stroke-dasharray="3 3" stroke-width="10"/>
+        </svg>
+
+        <div class="info">
+            <span>Мережа ресторанів доставки "жрачка топ"</span>
+            <span>Юридична адреса: Невідомий край, м.Петухово, 34</span>
+            <span>ИНН: 234567890567</span>
+        </div>
+        <h4>Фискальный чек</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th scope="col">Найменування</th>
+                    <th scope="col">Кількість</th>
+                    <th scope="col">Ціна</th>
+                </tr>
+            </thead>
+            <tbody>
+            {% for key, value in order.items %}
+                <tr>
+                    <td data-label="Найменування">{{ key }}</td>
+                    <td data-label="Кількість">{{ value|get_count }}</td>
+                    <td data-label="Ціна">{{ value|get_price }}</td>
+                </tr>
+            {% endfor %}
+            </tbody>
+        </table>
+        <p class="res">Итого: {{ total_price }}</p>
+    </div>
+</body>
+
+</html>
