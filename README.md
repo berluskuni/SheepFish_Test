@@ -7,3 +7,7 @@
 - ./manage.py loaddata printer/fixtures/printer.json
 - ./manage.py runserver 
 
+## Start Celery worker 
+New window activate virtualenv basedir and 
+
+celery -A django_drf worker -l INFO
